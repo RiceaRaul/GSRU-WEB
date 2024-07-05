@@ -1,0 +1,34 @@
+<div class="flex flex-col gap-2">
+    <h2>Time tracking</h2>
+    <form [formGroup]="timeTrackingForm" (submit)="saveLoggingTime()">
+        <div class="flex gap-2">
+            <mat-form-field class="w-full">
+                <mat-label>Log time</mat-label>
+                <input matInput placeholder="1h" formControlName="duration">
+            </mat-form-field>
+            <mat-form-field class="w-full">
+                <mat-label>Remaining time</mat-label>
+                <input matInput placeholder="1h" disabled [value]="remainingTime">
+            </mat-form-field>
+        </div>
+        <div class="flex gap-2">
+            <mat-form-field class="w-full">
+                <mat-label>Start time</mat-label>
+                <input matInput [matDatepicker]="picker" placeholder="Choose a date" formControlName="date">
+                <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                <mat-datepicker #picker></mat-datepicker>
+            </mat-form-field>
+            <ngx-timepicker-field formControlName="time" #timepicker class="border-[]" [defaultTime]="time.value" [format]="24" [controlOnly]="true"></ngx-timepicker-field>
+        </div>
+        
+        <mat-form-field class="w-full">
+            <mat-label>Leave a comment</mat-label>
+            <textarea matInput placeholder="Description" formControlName="comment"></textarea>
+        </mat-form-field>
+    
+        <div class="flex justify-end items-center gap-2">
+            <button mat-raised-button color="primary" type="submit">Save</button>
+            <button mat-raised-button color="warn" type="button" (click)="close()">Cancel</button>
+        </div>
+    </form>
+</div>

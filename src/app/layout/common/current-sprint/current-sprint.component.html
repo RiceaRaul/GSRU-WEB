@@ -1,0 +1,88 @@
+<div class="bg-card">
+    <div *ngIf="showBoard && !notFound" class="flex justify-end">
+        <button mat-raised-button color="primary" (click)="closeSprint()">Close sprint</button>
+    </div>
+    <div *ngIf="showBoard && !notFound" class="flex flex-col-reverse md:flex-row gap-4 w-full">
+        <mat-accordion multi class="p-2 shadow-lg flex-[80]">
+            @for(story of tasks | keyvalue; track story){
+                <mat-expansion-panel (opened)="selectTask(story.value)" (closed)="selectTask(story.value)">
+                    <mat-expansion-panel-header>
+                        <mat-panel-title>
+                        <div class="flex justify-start items-center gap-2">
+                            <div class="rounded-full w-9 h-9 scale-[.85] flex items-center justify-center hover:cursor-help"  [matTooltip]="story.value.taskType"
+                            [ngClass]="{
+                                'bg-primary': story.value.taskType == 'Task',
+                                'bg-red-800': story.value.taskType == 'Bug',
+                                'bg-green-800': story.value.taskType == 'Story',
+                                'bg-yellow-800': story.value.taskType != 'Task' && story.value.taskType != 'Bug' && story.value.taskType != 'Story'
+                            }">
+                                <mat-icon class="text-white" [svgIcon]="taskIcon(story.value)"></mat-icon>
+                            </div>
+                            <p>{{story.value.name}}</p>
+                        </div>
+                            
+                        </mat-panel-title>
+                        <mat-panel-description class="flex justify-between gap-2 items-center">
+                            {{story.value.description}}
+                            <div class="flex items-center justify-center gap-2">
+                                <p>{{story.value.taskStatus | transloco}}</p>
+                                <mat-chip class="bg-primary scale-[.85] flex items-center" matTooltip="Story points">
+                                    <span class="text-center text-white">
+                                        {{story.value.storyPoints}}
+                                    </span>
+                                </mat-chip>
+                            </div>
+                        </mat-panel-description>
+                    </mat-expansion-panel-header>
+                    <div class="content w-full p-4 bg-white grid gap-4"style="grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1rem;">
+                    @for(configuration of boardConfiguration; track configuration){
+                        <div >
+                            <div class="min-w-70 w-70 min-h-10 shadow-md mx-2 p-2 bg-[#F7F9F8]"
+                            [id]="addId(story.value.id,configuration.id,story.value.id)"
+                            cdkDropList
+                            [cdkDropListData]="tasks[story.value.id][configuration.nameShort]" 
+                            [cdkDropListConnectedTo]="connectedDropLists[story.value.id]"
+                            (cdkDropListDropped)="drop($event)" 
+                            >
+                                <div>
+                                    {{configuration.name | transloco}}
+                                </div>
+                                @for(task of tasks[story.value.id][configuration.nameShort]; track task.id; let  last = $last){
+                                    <div class="card bg-white shadow-md shadow-[#f3f3f3] p-2 rounded-md mb-4 hover:cursor-pointer" [ngClass]="{'mb-0':last}" cdkDrag (click)="selectTask(task)">
+                                        <div class="flex justify-between">
+                                            <p>
+                                                {{task.name}}
+                                            </p>
+                                            <p>
+                                                {{convertHours(task.remainingTime)}}
+                                            </p>
+                                        </div>
+                                        <div class="flex justify-between">
+                                            <p>
+                                                TASK-{{task.id}}
+                                            </p>
+                                            <div class="flex gap-2">
+                                                <div class="w-5 h-5 rounded-full text-white bg-accent-500 text-center flex items-center justify-center">
+                                                    I
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                }
+                            </div>
+                        </div>
+                    }
+                    </div>
+                </mat-expansion-panel>
+            }
+            
+        </mat-accordion>
+        <div *ngIf="taskSelected != null" class="flex-[20]">
+            <app-task-view [task]="taskSelected" [boardConfiguration]="boardConfiguration" [teamId]="teamId" [sprintId]="sprint.id" (closeMethod)="closeTaskView()" (afterCreateTask)="getActiveSprint(teamId)"></app-task-view>
+        </div>
+    </div>
+
+    <div *ngIf="notFound" class="flex justify-center items-center">
+        <p class="text-2xl">No active sprint</p>
+    </div>
+</div>

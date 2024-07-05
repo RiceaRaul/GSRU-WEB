@@ -1,0 +1,74 @@
+<div class="flex flex-col flex-auto min-w-0 print:hidden" *ngIf="userData != undefined">
+   <div class="flex justify-between items-center w-full pt-20 px-20">
+      <div class="flex items-center gap-2">
+         <img class="rounded-full w-20 h-20" src="/assets/images/avatars/brian-hughes.jpg">
+         <div>
+            <h1 class="text-3xl font-bold">{{'WELCOME-BACK' | transloco: {name:userData.lastName} }}</h1>
+            <p class="text-sm text-gray-500">You have 2 new notifications</p>
+         </div>
+      </div>
+      <div>
+         <button mat-flat-button color="primary" class="group/settings-btn">
+            <mat-icon class="group-hover/settings-btn:animate-spin">settings</mat-icon>
+            {{'SETTINGS' | transloco}}
+         </button>
+      </div>
+   </div>
+   <div
+      class="relative flex self-start pt-2 pb-1 pl-5 pr-4 ml-4 cursor-pointer overflow-hidden rounded-t-xl border border-b-0 bg-default mt-20"
+      matRipple
+      [matMenuTriggerFor]="teamsMenu">
+      <div class="flex items-center">
+         <div class="overflow-hidden">
+            <div class="font-medium leading-6 truncate">{{selectedTeam}}</div>
+         </div>
+         <div class="flex items-center justify-center pl-2">
+            <mat-icon
+                  class="icon-size-5"
+                  [svgIcon]="'heroicons_mini:chevron-down'"></mat-icon>
+         </div>
+      </div>
+      
+      <mat-menu
+         #teamsMenu="matMenu"
+         [xPosition]="'before'">
+         <button *ngFor="let team of userData.teams"
+            mat-menu-item
+            (click)="selectedTeam=team.name; selectedTeamId=team.id">{{team.name}}
+         </button>
+      </mat-menu>
+   </div>
+
+   <div class="flex-auto border-t -mt-px pt-4 sm:pt-6 bg-card">
+      <div class="w-full">
+         <mat-tab-group
+            class="sm:px-2"
+            mat-stretch-tabs="false"
+            [animationDuration]="'0'"
+         >
+         <mat-tab label="Overview">
+            <ng-template matTabContent>
+               <app-overview-tab [teamId]="selectedTeamId"></app-overview-tab>
+            </ng-template>
+         </mat-tab>
+         <mat-tab label="Curent Sprint">
+            <ng-template matTabContent>
+               <app-current-sprint [teamId]="selectedTeamId"></app-current-sprint>
+            </ng-template>
+         </mat-tab>
+
+         <mat-tab label="Backlog">
+            <ng-template matTabContent>
+               <app-backlog-overview [teamId]="selectedTeamId" ></app-backlog-overview>
+            </ng-template>
+         </mat-tab>
+
+         <mat-tab label="Team">
+            <ng-template matTabContent>
+               <app-team-overview [teamId]="selectedTeamId" ></app-team-overview>
+            </ng-template>
+         </mat-tab>
+         </mat-tab-group>
+      </div>
+   </div>
+</div>

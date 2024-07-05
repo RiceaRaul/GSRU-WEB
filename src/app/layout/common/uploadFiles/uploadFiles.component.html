@@ -1,0 +1,30 @@
+<div class="p-8 text-center border border-dashed relative my-auto mx-0 border-primary" appDnd (fileDropped)="onFileDropped($event)">
+    <input type="file" #fileDropRef id="fileDropRef" [multiple]="multiple()" class="opacity-0 absolute z-[2] w-full h-full top-0 left-0" [accept]="accept()" (change)="fileBrowseHandler($event.target.files)" />
+    <mat-icon svgIcon="heroicons_solid:arrow-up-tray" class="scale-150"></mat-icon>
+    <h3> Drag And Drop file here </h3>
+    <h3>or</h3>
+    <label for="fileDropRef" class="cursor-pointer">
+        <span class="text-blue-500">Browse for file</span>
+    </label>
+</div>
+
+<div class="w-full flex flex-col gap-2 items-center mt-2">
+    <div class="w-full flex justify-between gap-2 p-2 border border-dashed border-black items-center" *ngFor="let file of files; let i = index">
+        <mat-icon svgIcon="heroicons_solid:document"></mat-icon>
+        <div class="w-full">
+            <h4>
+                {{ file?.name }}
+            </h4>
+            <p >
+                {{ formatBytes(file?.size) }}
+            </p>
+        </div>
+        <button mat-icon-button  (click)="deleteFile(i)">
+            <mat-icon svgIcon="heroicons_solid:trash"></mat-icon>
+        </button>
+    </div>
+
+    <div *ngIf="files.length > 0">
+        <button mat-raised-button color="primary" (click)="uploadFiles()">Upload</button>
+    </div>
+</div>

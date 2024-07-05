@@ -1,0 +1,68 @@
+<mat-tab-group>
+    <mat-tab label="Teams"> 
+        <div class="flex flex-col gap-2">
+            <div class="flex flex-col gap-2">
+                <h1 class="text-xl">Manage the teams</h1>
+                <p>Manage the teams, add new team, edit or delete team</p>
+            </div>
+            <hr>
+            <div class="flex flex-col gap-2">
+                <h2>Add the team</h2>
+                <div class="flex gap-2 justify-between items-center">
+                    <mat-form-field class="w-full">
+                        <mat-label>Select an team</mat-label>
+                        <mat-select [(value)]="selectedTeam">
+                            <mat-option>None</mat-option>
+                            @for(team of teams; track team){
+                                <mat-option [value]="team.id">{{team.name}}</mat-option>
+                            }
+                        </mat-select>
+                    </mat-form-field>
+                    <button mat-flat-button color="primary" (click)="addTeam()" >Add team</button>
+                </div>
+            </div>
+            <div>
+                <h2 class="text-xl">Employee teams:</h2>
+                @for(empTeam of employee.teams; track empTeam){
+                    <div class="flex justify-between items-center gap-2">
+                        <h2 class="text-md">{{empTeam.name}}</h2>
+                        <button mat-mini-fab color="warn" class="scale-75" (click)="removeTeam(empTeam.id)"><mat-icon svgIcon="heroicons_outline:trash"></mat-icon></button>
+                    </div>
+                }
+            </div>
+        </div>        
+    </mat-tab>
+    <mat-tab label="Roles">
+        <div class="flex flex-col gap-2">
+            <div class="flex flex-col gap-2">
+                <h1 class="text-xl">Manage the roles</h1>
+                <p>Manage the roles, add new role, edit or delete role</p>
+            </div>
+            <hr>
+            <div class="flex flex-col gap-2">
+                <h2>Add the role</h2>
+                <div class="flex gap-2 justify-between items-center">
+                    <mat-form-field class="w-full">
+                        <mat-label>Select an role</mat-label>
+                        <mat-select [(value)]="selectedRole">
+                            <mat-option>None</mat-option>
+                            @for(role of roles; track role){
+                                <mat-option [value]="role.id">{{role.name}}</mat-option>
+                            }
+                        </mat-select>
+                    </mat-form-field>
+                    <button mat-flat-button color="primary" (click)="addRole()" >Add role</button>
+                </div>
+            </div>
+            <div>
+                <h2 class="text-xl">Employee roles:</h2>
+                @for(empRole of employee.roles; track empRole){
+                    <div class="flex justify-between items-center gap-2">
+                        <h2 class="text-md">{{empRole}}</h2>
+                        <button mat-mini-fab color="warn" class="scale-75" (click)="removeRole(empRole)"><mat-icon svgIcon="heroicons_outline:trash"></mat-icon></button>
+                    </div>
+                }
+            </div>
+        </div>
+    </mat-tab>
+</mat-tab-group>

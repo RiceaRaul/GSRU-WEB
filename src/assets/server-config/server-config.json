@@ -1,0 +1,5 @@
+{
+  "appName": "Gestionarea sprinturilor si resurse umane",
+  "server": "https://localhost:44302/api/",
+  "serverHub":"Base url for sockets"
+}

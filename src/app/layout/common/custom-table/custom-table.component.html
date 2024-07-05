@@ -1,0 +1,25 @@
+<div class="w-screen inline-table">
+    <table mat-table [dataSource]="dataSourceTable" class="mat-elevation-z8">
+        <ng-container *ngFor="let column of columnsName;index as index" [matColumnDef]="column">
+            <th class="text-center justify-center" mat-header-cell *matHeaderCellDef [resizeColumn]="true" [index]="index">
+                {{column | appTitlecase}}
+            </th>
+            <td class="text-center mat-cell" mat-cell *matCellDef="let element">
+                @if(editable[column]) {
+                    <mat-form-field>
+                        <input matInput [(ngModel)]="element[column]" [value]="element[column]" class="text-center w-[3em]" (change)="onInputChange($event,element,column)" type="number" min="0" max="1">
+                    </mat-form-field>
+                }
+                @else if(columnType[column] === 'date') {
+                    <mat-label >{{ element[column] | date: 'dd/MM/yyyy' }}</mat-label>
+                }
+                @else {
+                    <mat-label >{{ element[column] }}</mat-label>
+                }
+            </td>
+        </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="columnsName; sticky: true"></tr>
+        <tr class="mat-row" mat-row *matRowDef="let row;index as index; columns: columnsName;"></tr>
+    </table>
+</div>

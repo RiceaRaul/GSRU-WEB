@@ -1,0 +1,28 @@
+
+.calendar-wrapper .fc-header-toolbar{
+  padding: 10px !important;
+}
+
+::ng-deep .fc-button-primary{
+  @apply bg-primary text-white #{!important};
+}
+
+::ng-deep .fc-header-toolbar{
+  @apply p-4 #{!important};
+}
+
+::ng-deep .fc-button-group{
+  @apply flex gap-2 #{!important};
+}
+
+::ng-deep .fc-toolbar-chunk{
+  @apply flex gap-2 #{!important};
+}
+
+::ng-deep .fc-timegrid{
+  @apply p-4 #{!important};
+}
+
+::ng-deep .fc-event{
+  @apply bg-primary #{!important};
+}

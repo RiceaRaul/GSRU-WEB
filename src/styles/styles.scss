@@ -1,0 +1,48 @@
+/* ----------------------------------------------------------------------------------------------------- */
+/*  @ Import/write your custom styles here.
+/*  @ Styles from this file will override 'vendors.scss' and Fuse's base styles.
+/* ----------------------------------------------------------------------------------------------------- */
+.printable-modal{
+    @apply mobile:w-screen mobile:h-screen mobile:max-w-screen print:hidden #{!important};
+}
+
+.cdk-overlay-backdrop{
+    @apply print:bg-transparent #{!important};
+}
+
+.mat-sort-header-container{
+    @apply justify-center #{!important};
+}
+
+
+.mat-mdc-table {
+    @apply w-full;
+    &.resizing {
+      @apply select-none cursor-col-resize;
+    }
+    .cdk-header-cell {
+      span {
+        @apply block overflow-hidden text-ellipsis;
+      }
+    }
+    .mat-mdc-header-cell, .cdk-cell {
+      @apply relative;
+      &:not(:last-child) {
+        .resize-holder {
+            @apply cursor-col-resize w-5 h-full absolute -right-[10px] top-0 z-[1];
+        }
+      }
+    }
+    .cdk-header-cell,
+    .mat-mdc-header-cell,
+    .cdk-cell  {
+      @apply border-r-[1px] border-[rgba(0,0,0,0.12)];
+      &:not(:nth-child(1)) {
+        @apply px-0 py-[10px];
+      }
+    }
+}
+
+.dark{
+    @apply text-white #{!important};
+}

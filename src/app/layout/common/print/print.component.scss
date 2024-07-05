@@ -1,0 +1,4 @@
+:host {
+  display: block;
+  @apply print:text-black print:w-full print:h-full print:inline-block print:rounded-none print:shadow-none print:bg-transparent print:border-none print:after:border-none print:p-0 #{!important};
+}

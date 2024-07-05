@@ -1,0 +1,14 @@
+<div class="bg-slate-900 w-full flex flex-col justify-center items-center gap-2">
+    <h1 class="text-white text-3xl">Select team</h1>
+
+    <div class="flex flex-col justify-center items-center gap-2 sm:flex-row">
+        @for (team of teams; track $index) {
+            <div class="flex flex-col justify-center items-center text-white gap-2 scale-75 hover:scale-100 transition-all ease-linear hover:cursor-pointer" (click)="selectTeam($event,team)">
+                <div class="bg-gray-600 w-26 h-26 text-center flex items-center justify-center text-3xl">
+                    {{ team | firstLetter }}
+                </div>
+                <p>{{ team }}</p>
+            </div>
+        }
+    </div>
+</div>

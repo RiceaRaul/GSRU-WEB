@@ -1,0 +1,4 @@
+<mat-form-field floatLabel="always" id="debounce-input">
+    <mat-label>{{placeholder}}</mat-label>
+    <input matInput [placeholder]="placeholder" [disabled]="disabled" [(ngModel)]="inputValue" (input)="onSearch()">
+</mat-form-field>

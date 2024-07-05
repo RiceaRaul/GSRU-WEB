@@ -1,0 +1,69 @@
+<!doctype html>
+<html lang="en" class="print:left-0 print:top-0 print:relative">
+    <head>
+        <title>GSRU</title>
+        <meta charset="utf-8">
+        <meta
+            name="viewport"
+            content="width=device-width, height=device-height, initial-scale=1.0, minimum-scale=1.0">
+
+        <base href="/">
+
+        <!-- Favicon -->
+        <link
+            rel="icon"
+            type="image/png"
+            href="favicon-16x16.png">
+        <link
+            rel="icon"
+            type="image/png"
+            href="favicon-32x32.png">
+
+        <!-- Fonts -->
+        <link
+            href="assets/fonts/inter/inter.css"
+            rel="stylesheet">
+
+        <link
+            href="assets/fonts//ibm_plex_mono//ibm_font.css"
+            rel="stylesheet">
+
+        <!-- Icon fonts -->
+        <link
+            href="assets/fonts/material_icons/material_icons.css"
+            rel="stylesheet">
+
+        <!-- Splash screen styles -->
+        <link
+            href="assets/styles/splash-screen.css"
+            rel="stylesheet">
+            
+        <link href="https://fonts.googleapis.com/icon?family=Material+Icons&display=block" rel="stylesheet">
+
+    </head>
+
+    <body>
+
+        <!-- Splash screen -->
+        <fuse-splash-screen class="w-full">
+            <div class="airplaneAnimation">
+                <div class="plane">
+                    <div class="main"></div>
+                    <div class="wingOne"></div>
+                    <div class="wingTwo"></div>
+                    <div class="pollution"></div>
+                </div>
+                <div class="clouds">
+                    <div class="cloudOne"></div>
+                    <div class="cloudTwo"></div>
+                    <div class="cloudThree"></div>
+                </div>
+            </div>
+        </fuse-splash-screen>
+
+        <!-- App root -->
+        <app-root></app-root>
+        <app-print class="hidden print:z-99999 print:absolute print:w-full print:h-full print:block print:top-0 print:left-0"></app-print>
+    </body>
+
+</html>

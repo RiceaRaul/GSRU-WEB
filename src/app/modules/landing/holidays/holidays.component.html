@@ -1,0 +1,72 @@
+<div class="w-full p-2">
+    <div class="w-full flex justify-between">
+        <div class="flex flex-col gap-2 w-full">
+            <p>Total holidays: {{employeeData.totalLeaves}}</p>
+            <p>Total holidays: {{employeeData.remainingLeaves}}</p>
+        </div>
+        <button mat-flat-button color="primary" (click)="addHoliday()">Add holiday</button>
+    </div>
+    <mat-tab-group (selectedTabChange)="selectedTabChange($event)">
+        <mat-tab label="Calendar" class="flex flex-col w-full"> 
+            <div class="panel">
+                <div class="calendar-wrapper">
+                    <full-calendar #calendar [options]="calendarOptions" [deepChangeDetection]="true">
+                        <ng-template #eventContent let-arg>
+                            <div class="fc-event-main-frame flex items-center px-1 py-0.5 text-white">
+                                <div class="fc-event-time px-0.5 font-semibold">{{ arg.timeText }}</div>
+                                <div class="fc-event-title-container">
+                                    <div class="fc-event-title fc-sticky px-0.5 !font-medium">{{ arg.event.title }}</div>
+                                </div>
+                            </div>
+                        </ng-template>
+                    </full-calendar>
+                </div>
+            </div>
+        </mat-tab>
+        <mat-tab label="Requests" *ngIf="isTeamLead()">
+            <div *ngIf="leaves.length > 0">
+                <table mat-table [dataSource]="leavesDataSource" matSort class="mat-elevation-z8">
+                    <ng-container *ngFor="let column of leavesColumns;index as index" [matColumnDef]="column">
+                        @if(column === 'actions') {
+                            <th class="text-center justify-center" mat-header-cell *matHeaderCellDef [resizeColumn]="true" [index]="leavesColumns.length">
+                                Actions
+                            </th>
+                            <td class="text-center mat-cell" mat-cell *matCellDef="let element">
+                                <button mat-icon-button matTooltip="Approve" (click)="approveLeave(element)">
+                                    <mat-icon class="text-green-800" svgIcon="heroicons_outline:clipboard-document-check"></mat-icon>
+                                </button>
+                                <button mat-icon-button matTooltip="Decline" (click)="reject(element)">
+                                    <mat-icon class="text-red-800" svgIcon="heroicons_outline:archive-box-x-mark"></mat-icon>
+                                </button>
+                            </td>
+                        }
+                        @else {
+                            <th class="text-center justify-center" mat-header-cell mat-sort-header [sortActionDescription]="'Sort by' + column | appTitlecase"  *matHeaderCellDef [resizeColumn]="true" [index]="index">
+                                {{column | appTitlecase}}
+                            </th>
+                            <td class="text-center mat-cell" mat-cell *matCellDef="let element">
+                                @if(columnsType[column] === 'date') {
+                                    <mat-label >{{ element[column] | date: 'dd/MM/yyyy' }}</mat-label>
+                                }
+                                @else {
+                                    <mat-label >{{ element[column] }}</mat-label>
+                                }
+                            </td>
+                        }
+                    </ng-container>
+    
+                    <tr mat-header-row *matHeaderRowDef="leavesColumns; sticky: true"></tr>
+                    <tr class="mat-row" mat-row *matRowDef="let row;index as index; columns: leavesColumns;"></tr>
+                </table>
+                <mat-paginator [pageSizeOptions]="[5, 10, 20]"
+                    showFirstLastButtons
+                    aria-label="Select page of periodic elements">
+                </mat-paginator>
+            </div>
+            <div *ngIf="leaves.length === 0" class="flex flex-col justify-center items-center h-96">
+                <mat-icon svgIcon="heroicons_outline:magnifying-glass" class="scale-150"></mat-icon>
+                <p class="text-2xl">No leaves</p>
+            </div>
+        </mat-tab>
+    </mat-tab-group>
+</div>

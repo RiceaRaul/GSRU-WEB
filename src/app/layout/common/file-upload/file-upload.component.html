@@ -1,0 +1,18 @@
+<div class="w-full flex gap-2">
+    <input type="file" hidden (change)="onFileSelected($event)" #fileUpload>
+    <button [disabled] = "isDisabled" mat-flat-button color="primary"
+    (click)="fileUpload.click()">
+    Incarca fisier
+    </button>
+    <button
+        *ngIf="tooltip !== ''"
+        class="fuse-alert-dismiss-button"
+        mat-icon-button
+        (click)="hint.toggle()">
+        <mat-icon svgIcon="heroicons_outline:information-circle"
+            [matTooltip]="tooltip"
+            matTooltipPosition="right"
+            #hint="matTooltip">
+        </mat-icon>
+    </button>
+</div>

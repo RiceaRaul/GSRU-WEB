@@ -1,0 +1,47 @@
+<div>
+    <div class="flex gap-2 flex-col">
+        <h1 class="text-3xl">Backlog summary</h1>
+        <div class="flex gap-2">
+            <div class="flex flex-col flex-auto p-6 bg-card shadow rounded-2xl overflow-hidden">
+                <div class="flex items-start justify-center">
+                    <div class="text-lg font-medium tracking-tight leading-6 truncate">Summary</div>
+                </div>
+                <div class="flex flex-col items-center mt-2">
+                    <div class="text-7xl sm:text-8xl font-bold tracking-tight leading-none text-blue-500">{{totalTasks}}
+                    </div>
+                    <div class="text-lg font-medium text-blue-600 dark:text-blue-500">Due Tasks</div>
+                    <div class="flex items-baseline justify-center w-full mt-5 text-secondary">
+                        <div class="text-md font-medium truncate">Completed:</div>
+                        <div class="ml-1.5 text-lg font-semibold">{{completedTasks}}</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="flex flex-col gap-2" *ngIf="currentSprint !== undefined && currentSprint.id !== -1">
+        <h1 class="text-3xl">Current sprint</h1>
+        <div>
+            <apx-chart [series]="estimateVsRemaining.series" [chart]="estimateVsRemaining.chart"
+                [xaxis]="estimateVsRemaining.xaxis" [yaxis]="estimateVsRemaining.yaxis"
+                [dataLabels]="estimateVsRemaining.dataLabels" [stroke]="estimateVsRemaining.stroke"
+                [tooltip]="estimateVsRemaining.tooltip" [plotOptions]="estimateVsRemaining.plotOptions"
+                [fill]="estimateVsRemaining.fill" [legend]="estimateVsRemaining.legend">
+            </apx-chart>
+        </div>
+        <div>
+            <div id="chart">
+                <apx-chart [series]="taskAssignees.series" [chart]="taskAssignees.chart" [xaxis]="taskAssignees.xaxis"
+                    [yaxis]="taskAssignees.yaxis" [dataLabels]="taskAssignees.dataLabels"
+                    [plotOptions]="taskAssignees.plotOptions" [fill]="taskAssignees.fill"
+                    [tooltip]="taskAssignees.tooltip" [legend]="taskAssignees.legend">
+                </apx-chart>
+            </div>
+            <div>
+                <apx-chart [series]="taskTypesDistribution.series" [chart]="taskTypesDistribution.chart" 
+                    [labels]="taskTypesDistribution.labels" [responsive]="taskTypesDistribution.responsive">
+                </apx-chart>
+            </div>
+        </div>
+    </div>
+</div>

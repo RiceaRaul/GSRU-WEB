@@ -1,0 +1,25 @@
+<div class="flex gap-2">
+    <span>Add automatic holidays</span>
+    <mat-icon svgIcon="heroicons_outline:question-mark-circle" matTooltip="The automatic choice of leave is made automatically with the help of the desired month and the number of days.
+    Based on the vacations from new teams, we offer you the best vacation choice."></mat-icon>
+</div>
+<div class="flex gap-2 justify-between items-center">
+    <mat-form-field class="w-full">
+        <mat-label>Month and Year</mat-label>
+        <input matInput [matDatepicker]="dp" [formControl]="automaticHolidays">
+        <mat-hint>MM/YYYY</mat-hint>
+        <mat-datepicker-toggle matIconSuffix [for]="dp"></mat-datepicker-toggle>
+        <mat-datepicker #dp
+                        startView="multi-year"
+                        (monthSelected)="setMonthAndYear($event, dp)"
+                        panelClass="example-month-picker">
+        </mat-datepicker>
+    </mat-form-field>
+
+    <mat-form-field class="w-full">
+        <mat-label>Number of days</mat-label>
+        <input matInput type="number" min="1" [formControl]="automaticHolidaysDays">
+    </mat-form-field>
+
+    <button mat-flat-button color="primary" class="px-4" (click)="calculate()">Calculate</button>
+</div>

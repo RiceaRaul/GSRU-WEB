@@ -1,0 +1,29 @@
+.row-green {
+    @apply bg-green-400/50 dark:bg-green-800/50 hover:opacity-90 #{!important};
+}
+
+.row-light-green {
+    @apply bg-green-100/50 dark:bg-green-600/50 hover:opacity-90 ;
+}
+
+.row-red {
+    @apply bg-red-400/50 dark:bg-red-800/50 hover:opacity-90 #{!important};
+}
+
+.row-yellow {
+    @apply bg-yellow-400/50 dark:bg-yellow-800/50 hover:opacity-90 #{!important};
+}
+
+.row-light-yellow {
+    @apply bg-yellow-100/50 dark:bg-yellow-600/50 hover:opacity-90 ;
+}
+
+.row-gray {
+    @apply bg-gray-200/50 dark:bg-gray-600/50 hover:opacity-90 ;
+}
+
+.mat-paginator-sticky {
+    bottom: 0px;
+    position: sticky;
+    z-index: 10;
+}

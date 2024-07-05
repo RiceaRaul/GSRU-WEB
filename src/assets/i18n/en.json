@@ -1,0 +1,13 @@
+{
+    "WELCOME-BACK": "Welcome back, {{name}}!",
+    "SETTINGS": "Settings",
+    "HI": "Hi {{firstName}} {{lastName}}!",
+    "TODO": "To Do",
+    "IN_PROGRESS": "In Progress",
+    "CODE_REVIEW": "Code Review",
+    "QA_READY": "QA Ready",
+    "DONE": "Done",
+    "SIDEBAR":{
+        "HOME_GROUP_TITLE":"Home"
+    }
+}

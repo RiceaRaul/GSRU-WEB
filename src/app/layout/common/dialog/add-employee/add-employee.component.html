@@ -1,0 +1,122 @@
+<div>
+    <form [formGroup]="employeeForm" (ngSubmit)="onSubmit()" class="grid grid-cols-1 md:grid-cols-3 gap-4 p-4">
+        <div class="col-span-1">
+            <mat-form-field appearance="fill" class="w-full">
+                <mat-label>First Name</mat-label>
+                <input matInput formControlName="firstName" required>
+            </mat-form-field>
+        </div>
+
+        <div class="col-span-1">
+            <mat-form-field appearance="fill" class="w-full">
+                <mat-label>Last Name</mat-label>
+                <input matInput formControlName="lastName" required>
+            </mat-form-field>
+        </div>
+
+        <div class="col-span-1">
+            <mat-form-field appearance="fill" class="w-full">
+                <mat-label>Birth Date</mat-label>
+                <input matInput formControlName="birthDate" type="date" required>
+            </mat-form-field>
+        </div>
+
+        <div class="col-span-2">
+            <mat-form-field appearance="fill" class="w-full">
+                <mat-label>CNP</mat-label>
+                <input matInput formControlName="cnp">
+            </mat-form-field>
+        </div>
+
+        <div class="col-span-1">
+            <mat-form-field appearance="fill" class="w-full">
+                <mat-label>SerieNr</mat-label>
+                <input matInput formControlName="serieNr" required>
+            </mat-form-field>
+        </div>
+
+        <div class="col-span-3">
+            <mat-form-field appearance="fill" class="w-full">
+                <mat-label>Email</mat-label>
+                <input matInput formControlName="email" type="email" required>
+            </mat-form-field>
+        </div>
+
+        <div class="col-span-1">
+            <mat-form-field appearance="fill" class="w-full">
+                <mat-label>Salary</mat-label>
+                <input matInput formControlName="salary" type="number" required>
+            </mat-form-field>
+        </div>
+
+        <div class="col-span-1">
+            <mat-form-field appearance="fill" class="w-full">
+                <mat-label>Phone Number</mat-label>
+                <input matInput formControlName="phoneNumber" type="tel" required>
+            </mat-form-field>
+        </div>
+
+        <div class="col-span-1">
+            <mat-form-field appearance="fill" class="w-full">
+                <mat-label>Hire Date</mat-label>
+                <input matInput formControlName="hireDate" type="date" required>
+            </mat-form-field>
+        </div>
+
+        <div class="col-span-1">
+            <mat-form-field appearance="fill" class="w-full">
+                <mat-label>Company Email</mat-label>
+                <input matInput formControlName="companyEmail" type="email" required>
+            </mat-form-field>
+        </div>
+
+        <div class="col-span-1">
+            <mat-form-field appearance="fill" class="w-full">
+                <mat-label>Total Leaves</mat-label>
+                <input matInput formControlName="totalLeaves" type="number" required>
+            </mat-form-field>
+        </div>
+
+        <div class="col-span-1">
+            <mat-form-field appearance="fill" class="w-full">
+                <mat-label>Remaining Leaves</mat-label>
+                <input matInput formControlName="remainingLeaves" type="number" required>
+            </mat-form-field>
+        </div>
+
+        <div class="col-span-1">
+            <mat-form-field appearance="fill" class="w-full">
+                <mat-label>Work Hours</mat-label>
+                <input matInput formControlName="workHours" type="number" required>
+            </mat-form-field>
+        </div>
+
+        <div class="col-span-3">
+            <mat-form-field appearance="fill" class="w-full">
+                <mat-label>Address 1</mat-label>
+                <input matInput formControlName="address1" required>
+            </mat-form-field>
+        </div>
+
+        <div class="col-span-3">
+            <mat-form-field appearance="fill" class="w-full">
+                <mat-label>Address 2</mat-label>
+                <input matInput formControlName="address2">
+            </mat-form-field>
+        </div>
+
+        <div class="col-span-3">
+            <mat-form-field class="w-full">
+                <mat-label>Manager</mat-label>
+                <mat-select formControlName="managerId">
+                    <mat-option>None</mat-option>
+                    <mat-option *ngFor="let manager of managers" [value]="manager.id">{{manager.firstName}} {{manager.lastName}}</mat-option>
+                </mat-select>
+            </mat-form-field>
+        </div>
+
+        <div class="col-span-3 flex justify-end">
+            <button mat-raised-button type="submit" class="mt-4">Submit</button>
+        </div>
+    </form>
+</div>

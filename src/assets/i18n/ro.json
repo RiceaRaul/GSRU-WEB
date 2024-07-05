@@ -1,0 +1,34 @@
+{
+    "WELCOME-BACK": "Bine ai venit, {{name}}!",
+    "SETTINGS":"Setari",
+    "HI":"Salutare, {{firstName}} {{lastName}}!",
+    "TODO": "De facut",
+    "IN_PROGRESS": "In progres",
+    "CODE_REVIEW": "Revizie cod",
+    "QA_READY": "QA pregatit",
+    "DONE": "Finalizat",
+    "SIDEBAR":{
+        "HOME_GROUP_TITLE":"Acasa"
+    },
+
+    "QS_TABLE":{
+        "EQUALS":"Egal",
+        "NOT_EQUALS":"Diferit",
+        "GREATER_THAN":"Mai mare decat",
+        "GREATER_THAN_OR_EQUALS":"Mai mare sau egal",
+        "LESS_THAN":"Mai mic decat",
+        "LESS_THAN_OR_EQUALS":"Mai mic sau egal",
+        "START_WITH":"Incepe cu",
+        "END_WITH":"Se termina cu",
+        "CONTAINS":"Contine",
+        "NOT_CONTAINS":"Nu contine",
+        "DATE_IS":"Data este",
+        "DATE_IS_NOT":"Data nu este",
+        "DATE_BEFORE":"Data inainte de",
+        "DATE_AFTER":"Data dupa",
+        "FILTER_VALUE":"Valoare filtru",
+        "CHOOSE_A_DATE":"Alege o data",
+        "APPLY":"Aplica",
+        "CLEAR":"Sterge"
+    }
+}

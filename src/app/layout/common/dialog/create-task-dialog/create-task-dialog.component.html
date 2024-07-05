@@ -1,0 +1,53 @@
+<div class="p-2">
+    <form [formGroup]="taskForm" (submit)="createTask()">
+        <mat-form-field class="w-full">
+            <mat-label>Task Name</mat-label>
+            <input matInput placeholder="Task Name" formControlName="title" required>
+        </mat-form-field>
+        <mat-form-field class="w-full">
+            <mat-label>Task Description</mat-label>
+            <textarea matInput placeholder="Task Description" required formControlName="description"></textarea>
+        </mat-form-field>
+        <mat-form-field class="w-full">
+            <mat-label>Task Type</mat-label>
+            <mat-select required formControlName="type">
+                <mat-option *ngFor="let type of taskTypes?.result" [value]="type.id">{{type.name}}</mat-option>
+            </mat-select>
+        </mat-form-field>
+        <mat-form-field class="w-full">
+            <mat-label>Task Priority</mat-label>
+            <mat-select formControlName="priority">
+                <mat-option value="3">High</mat-option>
+                <mat-option value="2">Medium</mat-option>
+                <mat-option value="1">Low</mat-option>
+                <mat-option value="0">None</mat-option>
+            </mat-select>
+        </mat-form-field>
+        <mat-form-field class="w-full">
+            <mat-label>Task Status</mat-label>
+            <mat-select required formControlName="status">
+                <mat-option *ngFor="let type of taskStatus?.result" [value]="type.id">{{type.name | transloco}}</mat-option>
+            </mat-select>
+        </mat-form-field>
+
+        <div class="flex gap-2">
+            <mat-form-field class="w-full">
+                <mat-label>Task Estimate</mat-label>
+                <input matInput placeholder="Task Estimate" formControlName="estimate" required>
+                <mat-hint align="start">E.g: 1d 4h what is 1 day and 4 hours</mat-hint>
+            </mat-form-field>
+            <mat-form-field class="w-full">
+                <mat-label>Story points</mat-label>
+                <input matInput placeholder="Story points" formControlName="story_points" required>
+            </mat-form-field>
+        </div>
+
+        <div class="flex gap-2 justify-end">
+            <button mat-flat-button color="primary" class="flex items-center">
+                <mat-icon svgIcon="heroicons_solid:plus" class="scale-75"></mat-icon>
+                Create
+            </button>
+            <button mat-flat-button color="warn" (click)="closeDialog()">Cancel</button>
+        </div>
+    </form>
+</div>

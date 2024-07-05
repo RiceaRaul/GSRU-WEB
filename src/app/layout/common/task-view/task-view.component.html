@@ -1,0 +1,146 @@
+<div class="flex flex-col gap-2 shadow-md shadow-[#f3f3f3] h-full max-h-full">
+    <div class="flex justify-between p-2 items-center text-center">
+        <div class="flex flex-col gap-2">
+            <h1>{{task().name}}</h1>
+            <p>TASK-{{task().id}}</p>
+        </div>
+        <button mat-mini-fab class="scale-[60%] bg-transparent text-black" (click)="close()">
+            <mat-icon svgIcon="heroicons_solid:x-mark"></mat-icon>
+        </button>
+    </div>
+    <div class="flex">
+        <button mat-mini-fab class="scale-[60%] bg-[#f3f3f3] shadow-md text-black" matTooltip="Add attach" (click)="uploadFile()" >
+            <mat-icon svgIcon="heroicons_solid:link"></mat-icon>
+        </button>
+
+        <button mat-mini-fab  class="scale-[60%] bg-[#f3f3f3] shadow-md text-black" matTooltip="Add child" (click)="createTask()">
+            <mat-icon svgIcon="account_tree"></mat-icon>
+        </button>
+
+        
+        <button mat-mini-fab  class="scale-[60%] bg-[#f3f3f3] shadow-md text-black" matTooltip="Add time" (click)="addLogTime()">
+            <mat-icon svgIcon="heroicons_solid:clock"></mat-icon>
+        </button>
+    </div>
+
+    <div class="w-full">
+        <mat-form-field class="w-full">
+            <mat-select [(value)]="currentStatus" (valueChange)="changeStatus()">
+            @for (configuration of boardConfiguration(); track configuration) {
+                <mat-option [value]="configuration.id">{{configuration.name | transloco}}</mat-option>
+            }
+            </mat-select>
+        </mat-form-field>
+    </div>
+    <div class="flex flex-col gap-2">
+        <p>Description</p>
+        <p>{{task().description}}</p>
+    </div>
+
+    <div class="bg-card shadow-md issues flex flex-col gap-2 w-full">
+        <div class="flex justify-between items-center px-2">
+            <p>Childs</p>
+
+            <div class="scale-[60%] text-black hover:cursor-pointer" matTooltip="Add child" (click)="createTask()">
+                <mat-icon class="opacity-95 hover:opacity-100"  svgIcon="heroicons_solid:plus"></mat-icon>
+            </div>
+        </div>
+        <div class="flex p-2 w-full" *ngIf="task().children.length > 0">
+            <div class="flex gap-2 justify-between bg-card shadow-md rounded-md w-full p-2" *ngFor="let child of task().children;">
+                <p>TASK-{{child.id}}</p>
+                <p>{{child.name}}</p>
+                <p>{{child.taskStatus}}</p>
+            </div>
+        </div>
+    </div>
+
+    <mat-accordion>
+        <mat-expansion-panel hideToggle>
+            <mat-expansion-panel-header>
+            <mat-panel-title>
+                Details
+            </mat-panel-title>
+        </mat-expansion-panel-header>
+            <div class="flex flex-col gap-4">
+                <div class="flex justify-between items-center text-center px-5">
+                    <div class="flex flex-col gap-2 w-full">
+                        <div class="flex justify-between items-center w-full">
+                            <p>Assignee:</p>
+                            <div class="max-h-15 overflow-scroll flex gap-2 flex-col p-2">
+                                <span *ngFor="let assginee of task().taskAssignees;">{{assginee.employeeName}}</span>
+                            </div>
+                        </div>
+                        <div class="flex justify-end items-center w-full">
+                            <button class="scale-[65%] bg-[#f3f3f3] shadow-md text-black" (click)="assigneToMe()">
+                                Add to assign
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                <div class="flex justify-between items-center text-center px-5">
+                    <p>Reporter:</p>
+
+                    <span>{{task().reporter}}</span>
+                </div>
+            </div>
+        </mat-expansion-panel>
+
+        <mat-expansion-panel hideToggle>
+            <mat-expansion-panel-header>
+            <mat-panel-title>
+                Comments
+            </mat-panel-title>
+        </mat-expansion-panel-header>
+            <div class="w-full flex p-2">
+                <div class="flex flex-col gap-2 w-full">
+                    <div class="flex flex-col w-full max-h-160 overflow-scroll">
+                        @for(comment of task().taskComments; track comment.id){
+                            <div class="flex flex-col w-full gap-2 border-b-2 ">
+                                <p>{{comment.authorName}}</p>
+                                <quill-view class="w-full max-w-full md:max-w-160" [content]="comment.comment" format="html" theme="snow"></quill-view>
+                            </div>
+                        }
+                    </div>
+    
+                    <div *ngIf="!isAddComment; else addComementQuill" class="flex justify-end">
+                        <button mat-button color="primary" (click)="isAddComment = true">Add comment</button>
+                    </div>
+                </div>
+                <ng-template #addComementQuill>
+                    <div class="flex flex-col gap-2 w-full">
+                        <quill-editor
+                        class="w-full max-w-full md:max-w-160"
+                        bounds="self"
+                        [formControl]="commentBody"
+                        [modules]="quillModules">
+                        </quill-editor>
+            
+                        <div class="flex gap-2 justify-end">
+                            <button mat-button color="primary" (click)="addComment()">Add comment</button>
+                            <button mat-button color="warn" (click)="isAddComment = false">Cancel</button>
+                        </div>
+                    </div>
+                </ng-template>
+            </div>
+        </mat-expansion-panel>
+
+        <mat-expansion-panel hideToggle>
+            <mat-expansion-panel-header>
+            <mat-panel-title>
+                Attachments
+            </mat-panel-title>
+        </mat-expansion-panel-header>
+            <div class="w-full flex p-2">
+                <div class="flex flex-col gap-2 w-full">
+                    <div class="flex flex-col w-full max-h-160 overflow-scroll gap-2">
+                        @for(attach of task().taskAttachments; track attach.id){
+                            <div class="flex flex-col w-full gap-2 border-b-2 hover:cursor-pointer" (click)="downloadFile(attach.id)">
+                                <p>{{attach.fileName}}</p>
+                            </div>
+                        }
+                    </div>
+                </div>
+            </div>
+        </mat-expansion-panel>
+    </mat-accordion>
+</div>

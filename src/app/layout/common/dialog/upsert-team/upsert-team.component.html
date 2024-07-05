@@ -1,0 +1,32 @@
+<div>
+    <div *ngIf="!isUpdate">
+        <h1 class="text-xl">Add a new team</h1>
+        <p>Add a new team, assign a manager  to the team</p>
+    </div>
+    <div *ngIf="isUpdate">
+        <h1 class="text-xl">Update team information</h1>
+        <p>Update the team information, assign a manager  to the team</p>
+    </div>
+    <form [formGroup]="teamForm" (submit)="upsertTeam()">
+        <mat-form-field appearance="fill" class="w-full">
+            <mat-label>Name</mat-label>
+            <input matInput formControlName="TeamName">
+        </mat-form-field>
+
+        <mat-form-field class="w-full">
+            <mat-label>Manager</mat-label>
+            <mat-select formControlName="TeamLeadId">
+                <mat-option>None</mat-option>
+                <mat-option *ngFor="let employee of employees" [value]="employee.id">{{employee.firstName}} {{employee.lastName}}</mat-option>
+            </mat-select>
+        </mat-form-field>
+
+        <div class="flex gap-2 justify-end">
+            <button mat-flat-button color="primary" class="flex items-center" type="submit">
+                <mat-icon svgIcon="heroicons_solid:plus" class="scale-75"></mat-icon>
+                {{isUpdate ? 'Update' : 'Create'}}
+            </button>
+            <button mat-flat-button color="warn" type="button" (click)="closeDialog()">Cancel</button>
+        </div>
+    </form>
+</div>

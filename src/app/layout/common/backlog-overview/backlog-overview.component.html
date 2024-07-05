@@ -1,0 +1,90 @@
+<div class="bg-card" *ngIf="backlogData != null">
+    <div class="flex flex-col gap-2">
+        <div class="flex justify-end">
+            <button mat-flat-button color="primary" class="flex gap-1 items-center" (click)="createSprint()"><mat-icon svgIcon="heroicons_solid:plus"></mat-icon> Create new sprint</button>
+        </div>
+    
+        <div>
+            <mat-accordion multi class="p-2 shadow-lg">
+                <mat-expansion-panel *ngFor="let sprint of backlogData.sprints;" (open)="sprint.collapsed = true"
+                    (closed)="sprint.collapsed = false">
+                    <mat-expansion-panel-header>
+                        <mat-panel-title>
+                            @if(sprint.number == 0){
+                                Backlog
+                            }
+                            @else{
+                                Sprint {{sprint.number}}
+                            }
+                        </mat-panel-title>
+                        <mat-panel-description>
+                            {{sprint.sprintGoal}}
+                        </mat-panel-description>
+                    </mat-expansion-panel-header>
+                    <mat-expansion-panel-content>
+                        <div class="flex flex-col gap-2">
+                            <div class="flex justify-end gap-2">
+                                <button *ngIf="sprint.number !== 0 && sprint.startDate == null" mat-flat-button color="primary" class="flex gap-1 items-center" (click)="startSprint(sprint.id, sprint.number)"><mat-icon svgIcon="heroicons_solid:play"></mat-icon> Start sprint</button>
+                                <button mat-flat-button color="primary" class="flex gap-1 items-center" (click)="createTask(sprint.id)"><mat-icon svgIcon="heroicons_solid:plus"></mat-icon> Add task</button>
+                                <button mat-mini-fab matTooltip="Settings" color="primary" (click)="openSprintWorkload(sprint.id, !(sprint.number !== 0 && sprint.startDate == null))" aria-label="Settings for sprint">
+                                    <mat-icon>settings</mat-icon>
+                                </button>
+                            </div>
+
+                            <div [id]="addId(sprint.id)" 
+                            cdkDropList 
+                            [cdkDropListData]="sprint.tasks" 
+                            [cdkDropListConnectedTo]="connectedDropLists"
+                            (cdkDropListDropped)="drop($event)" 
+                            class="flex flex-col gap-2 min-h-10 relative">
+                                @if(sprint.tasks.length == 0){
+                                    <div class="absolute inset-0 flex justify-center  pointer-events-none h-full">
+                                        Drop here or create a new task
+                                    </div>
+                                }
+                                @else{
+                                    @for(task of sprint.tasks; track task.id){
+                                        <div (click)="toggleSelection(task,$event)" cdkDrag class="flex gap-4 items-center justify-between bg-white shadow-md rounded-xl p-4 h-10 hover:cursor-pointer"
+                                            [ngClass]="{'border-4 border-primary':isSelected(task)}">
+                                            <div class="flex gap-2 items-center justify-center">
+                                                <div class="rounded-full w-9 h-9 scale-[.85] flex items-center justify-center hover:cursor-help"  [matTooltip]="task.taskType"
+                                                [ngClass]="{
+                                                    'bg-primary': task.taskType == 'Task',
+                                                    'bg-red-800': task.taskType == 'Bug',
+                                                    'bg-green-800': task.taskType == 'Story',
+                                                    'bg-yellow-800': task.taskType != 'Task' && task.taskType != 'Bug' && task.taskType != 'Story'
+                                                }">
+                                                    <mat-icon class="text-white" [svgIcon]="taskIcon(task)"></mat-icon>
+                                                </div>
+                                                <div class="flex items-center">
+                                                    <p>{{task.name}}</p>
+                                                    <div class="rounded-full w-fit h-fit px-5 scale-[.70] flex items-center justify-center hover:cursor-help text-white" *ngIf="task.priority != undefined"
+                                                    [ngClass]="{
+                                                        'bg-red-800': task.priority == 'High',
+                                                        'bg-green-800': task.priority == 'Low',
+                                                        'bg-yellow-800': task.priority == 'Medium'
+                                                    }">
+                                                        <p>{{task.priority}}</p>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <p class="max-w-128 text-ellipsis truncate" [matTooltip]="task.description">{{task.description}}</p>
+                                            <div class="flex items-center justify-center gap-2">
+                                                <p>{{task.taskStatus | transloco}}</p>
+                                                <mat-chip class="bg-primary scale-[.85] flex items-center" matTooltip="Story points">
+                                                    <span class="text-center text-white">
+                                                        {{task.storyPoints}}
+                                                    </span>
+                                                </mat-chip>
+                                            </div>
+                                        </div>
+                                    }
+                                }
+                            </div>
+                        </div>
+                    </mat-expansion-panel-content>
+                </mat-expansion-panel>
+            </mat-accordion>
+        </div>
+    </div>
+</div>
